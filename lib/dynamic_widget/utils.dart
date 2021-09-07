@@ -226,6 +226,17 @@ Color? parseHexColor(String? hexColorString) {
   return Color(colorInt);
 }
 
+BoxDecoration? parseBoxDecoration(Map<String,dynamic>? map){
+  if (map == null) {
+    return null;
+  }
+  return BoxDecoration(
+    border: map['border'],
+    borderRadius: map['borderRadius'],
+    color: map['color']
+  );
+}
+
 TextStyle? parseTextStyle(Map<String, dynamic>? map) {
   if (map == null) {
     return null;
@@ -1085,6 +1096,50 @@ String exportAlignmentDirectional(AlignmentDirectional alignmentDirectional){
   }
 
   return "topStart";
+}
+
+exportDecoration(BoxDecoration decoration){
+  if (decoration == null) {
+    return null;
+  }
+
+  return <String, dynamic>{
+    "border":decoration.border!=null?exportBorder(decoration.border!):null,
+    "borderRadius":decoration.borderRadius!=null?exportRadius(decoration.borderRadius! as BorderRadius):null,
+    "color":decoration.color!=null?decoration.color:null,
+    "boxShadow":decoration.boxShadow!=null?decoration.boxShadow:null,
+  };
+}
+
+exportRadius(BorderRadius borderRadius){
+  return <String, dynamic>{
+    "bottomLeftx":borderRadius.bottomLeft.x!=null?borderRadius.bottomLeft.x:null,
+    "bottomLefty":borderRadius.bottomLeft.y!=null?borderRadius.bottomLeft.y:null,
+    "bottomRightx":borderRadius.bottomRight.x!=null?borderRadius.bottomRight.x:null,
+    "bottomRighty":borderRadius.bottomRight.y!=null?borderRadius.bottomRight.y:null,
+    "topLeftx":borderRadius.topLeft.x!=null?borderRadius.topLeft.x:null,
+     "topLefty":borderRadius.topLeft.y!=null?borderRadius.topLeft.y:null,
+    "topRightx":borderRadius.topRight.x!=null?borderRadius.topRight.x:null,
+    "topRighty":borderRadius.topRight.y!=null?borderRadius.topRight.y:null,
+  };
+}
+
+exportBorder(BoxBorder boxBorder){
+  if(boxBorder==null){
+    return null;
+  }
+
+  return <String,dynamic>{
+    "bottom":boxBorder.bottom!=null?exportBottomBorder(boxBorder.bottom):null,
+    "top":boxBorder.top!=null?exportBottomBorder(boxBorder.top):null,
+  };
+}
+
+exportBottomBorder(BorderSide borderSide){
+  return <String,dynamic>{
+    "color":borderSide.color!=null?borderSide.color:null,
+    "width":borderSide.width!=null?borderSide.width:null,
+  };
 }
 
 String exportAlignment(Alignment? alignment) {
